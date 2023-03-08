@@ -8,6 +8,7 @@ async function insertDailydata(req, res, next) {
       "params": [req.body.litre,moment().toDate()]
     }
 db.insertData(ins)
+res.send({ status: "successfully inserted the data", })
    console.log('inserted morndata')
   }
   catch (err) {
