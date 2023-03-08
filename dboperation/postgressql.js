@@ -64,20 +64,31 @@ return new Promise(async(resolve, reject) => {
 
   // insert query================
 let ins = {
-    "query": `INSERT INTO morning_data (litre,timestamp) values($1,$2)`,
-    "params": [44,moment().toDate()]
+    "query": `INSERT INTO milkdata (morning_litre,evening_litre,timestamp) values($1,$2,$3)`,
+    "params": [4,3,moment().subtract(6,'day').toDate()]
   }
+
   let createTable={
-    "query":`
-    CREATE TABLE morning_data
+    "query":`CREATE SEQUENCE milkdata_id_seq;
+    CREATE TABLE milkdata
     (
-       id INT NOT NULL DEFAULT NEXTVAL('morning_data_id_seq'),
-       litre DECIMAL,
+       id INT NOT NULL DEFAULT NEXTVAL('milkdata_id_seq'),
+       morning_litre DECIMAL,
+       evening_litre DECIMAL,
        timestamp timestamp
     );`,
     "params":[]
   }
-//  insertData(createTable)
+
+  let update={
+    "query": `UPDATE  milkdata SET morning_litre=$1 where id=$2 `,
+    "params": [0,2]
+  }
+  let del={
+    "query": `DELETE FROM milkdata where id=8 `,
+    "params": []
+  }
+//  insertData(del)
 
   // select query================
   let id=moment().subtract(29,'minute').format('YYYY-MM-DD HH:mm:ss')
