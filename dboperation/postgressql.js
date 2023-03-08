@@ -44,7 +44,7 @@ return new Promise(async(resolve, reject) => {
         ssl: true
       });
     await client.connect();
-     client.query(`${query.query}`, query.params, function (err, result){ 
+    await client.query(`${query.query}`, query.params, function (err, result){ 
         if(err){
             client.end();
             reject(err)
@@ -68,15 +68,16 @@ let ins = {
     "params": [44,moment().toDate()]
   }
   let createTable={
-    "query":`CREATE SEQUENCE morning_data_id_seq;
+    "query":`
     CREATE TABLE morning_data
     (
        id INT NOT NULL DEFAULT NEXTVAL('morning_data_id_seq'),
-       litre INT,
+       litre DECIMAL,
        timestamp timestamp
-    );`
+    );`,
+    "params":[]
   }
-
+//  insertData(createTable)
 
   // select query================
   let id=moment().subtract(29,'minute').format('YYYY-MM-DD HH:mm:ss')

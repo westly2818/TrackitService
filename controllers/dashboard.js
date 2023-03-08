@@ -7,7 +7,7 @@ async function insertDailydata(req, res, next) {
       "query": `INSERT INTO morning_data (litre,timestamp) values($1,$2)`,
       "params": [req.body.litre,moment().toDate()]
     }
-db.insertData(ins)
+await db.insertData(ins)
 res.send({ status: "successfully inserted the data", })
    console.log('inserted morndata')
   }
