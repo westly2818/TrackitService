@@ -3,7 +3,7 @@ const dashboardController = require("../controllers/dashboard");
 
 const router = express.Router();
 
-router.post("/getData",  dashboardController.getDashboardData);
-router.get("/getnames",  dashboardController.getnames);
+router.post("/insertdata",  dashboardController.insertDailydata);
+router.post("/getdata",  dashboardController.getdata);
 
 module.exports = router;
