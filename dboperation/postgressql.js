@@ -85,7 +85,7 @@ let ins = {
     "params": [0,2]
   }
   let del={
-    "query": `DELETE FROM milkdata where id=8 `,
+    "query": `DELETE FROM milkdata where id=1 `,
     "params": []
   }
 //  insertData(del)
