@@ -63,9 +63,10 @@ return new Promise(async(resolve, reject) => {
 
 
   // insert query================
+  let today=moment().subtract(50,'minute').format('YYYY-MM-DD HH:mm:ss')
 let ins = {
     "query": `INSERT INTO milkdata (morning_litre,evening_litre,timestamp) values($1,$2,$3)`,
-    "params": [4,3,moment().subtract(6,'day').toDate()]
+    "params": [4,0,moment().subtract(80,'minutes').toDate()]
   }
 
   let createTable={
@@ -85,7 +86,7 @@ let ins = {
     "params": [0,2]
   }
   let del={
-    "query": `DELETE FROM milkdata where id=1 `,
+    "query": `DELETE FROM milkdata where id=13 `,
     "params": []
   }
 //  insertData(del)
