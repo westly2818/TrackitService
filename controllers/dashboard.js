@@ -18,6 +18,7 @@ async function insertDailydata(req, res, next) {
       "params": [requestData.litre,result.data[0].id]
     }
     await db.insertData(update)
+    res.send({ status: "success", message:"successfully updated the data"})
 }
 else{
   let ins = {
@@ -25,6 +26,7 @@ else{
     "params": [requestData.litre,0,moment().toDate()]
   }
   await db.insertData(ins)
+  res.send({ status: "success", message:"successfully inserted the data"})
 }
 // }
 // if(requestData.time=='evening'){
@@ -52,7 +54,7 @@ else{
 
 // }
  
-res.send({ status: "successfully inserted the data", })
+
    console.log('inserted morndata')
   }
   catch (err) {
