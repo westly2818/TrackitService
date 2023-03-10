@@ -48,8 +48,8 @@ async function insertDailydata(req, res, next) {
         "params": [requestData.litre, null, moment().toDate()]
       }
       await db.insertData(update).then(response => {
-        if (res.status === 'success') {
-          response.send({ status: "success", message: "successfully inserted the data" })
+        if (response.status === 'success') {
+          res.send({ status: "success", message: "successfully inserted the data" })
         }
       })
 
