@@ -30,7 +30,7 @@ async function insertData(querydata){
         }
       });
       console.log('inserted successfully')
-      resolve({'status':'successfully inserted'})
+      resolve({'status':'success'})
     })
 }
 async function queryData(query){
@@ -83,10 +83,10 @@ let ins = {
 
   let update={
     "query": `UPDATE  milkdata SET morning_litre=$1 where id=$2 `,
-    "params": [0,2]
+    "params": [15,6]
   }
   let del={
-    "query": `DELETE FROM milkdata where id=13 `,
+    "query": `DELETE FROM milkdata where id=14 `,
     "params": []
   }
 //  insertData(del)
