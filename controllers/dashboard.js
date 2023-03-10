@@ -54,32 +54,6 @@ async function insertDailydata(req, res, next) {
       })
 
     }
-    // }
-    // if(requestData.time=='evening'){
-    //   let today=moment().startOf('day').format('YYYY-MM-DD HH:mm:ss')
-    // let getquery={
-    //   "query": `select * from milkdata where timestamp > '${today}'`,
-    //   "params": []
-    // }
-    // let result=await db.queryData(getquery)
-    // if(result.data && result.data.length>0){
-    //   let update={
-    //     "query": `UPDATE  milkdata SET evening_litre=$1 where id=$2 `,
-    //     "params": [requestData.litre,result.data[0].id]
-    //   }
-    //   await db.insertData(update)
-    // }
-    // else{
-    //   let ins = {
-    //     "query": `INSERT INTO milkdata (morning_litre,evening_litre,timestamp) values($1,$2,$3)`,
-    //     "params": [0,requestData.litre,moment().toDate()]
-    //   }
-    //   await db.insertData(ins)
-    // }
-
-
-    // }
-
 
     console.log('inserted morndata')
   }
@@ -101,7 +75,35 @@ async function getdata(req, res, next) {
   }
 };
 
+async function deleteData(req,res){
+  try{
+    if(req.body.time){
+    let timing=req.body.time
+    let id=req.body.id
+      let update = {
+        "query": `UPDATE  milkdata SET ${timing}=$1 where id=$2 `,
+        "params": [null,id]
+      }
+      await db.insertData(update).then(response => {
+        if (response.status === 'success') {
+          res.send({ status: "success", message: "successfully deleted the data" })
+        }
+      })
+    }
+    else
+    {
+      res.send({"status":"failed please send the input"})
+    }
+  
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
 module.exports = {
   insertDailydata: insertDailydata,
-  getdata: getdata
+  getdata: getdata,
+  deleteData:deleteData
+  
 }
