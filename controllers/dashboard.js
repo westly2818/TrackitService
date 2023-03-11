@@ -6,7 +6,50 @@ async function insertDailydata(req, res, next) {
   try {
 
     let requestData = req.body
-    // if(requestData.time=='morning'){
+    if(req.body.customInsert){
+      let getquery = {
+        "query": `select * from milkdata where timestamp > '${requestData.startDate}' and timestamp <  '${requestData.endDate}'`,
+        "params": []
+      }
+      let result = await db.queryData(getquery)
+      if(result.data && result.data.length > 0){
+        if(requestData.mornLitre !=null && requestData.eveningLitre ==null){
+          let update = {
+            "query": `UPDATE  milkdata SET morning_litre=$1 where id=$2 `,
+            "params": [requestData.mornLitre, result.data[0].id]
+          }
+          await db.insertData(update).then(response => {
+            if (response.status === 'success') {
+              res.send({ status: "success", message: "successfully updated the data" })
+            }
+          })
+        }
+        else if(requestData.mornLitre ==null && requestData.eveningLitre !=null){
+          let update = {
+            "query": `UPDATE  milkdata SET evening_litre=$1 where id=$2 `,
+            "params": [requestData.eveningLitre, result.data[0].id]
+          }
+          await db.insertData(update).then(response => {
+            if (response.status === 'success') {
+              res.send({ status: "success", message: "successfully updated the data" })
+            }
+          })
+        }
+      }
+      else{
+        let ins = {
+          "query": `INSERT INTO milkdata (morning_litre,evening_litre,timestamp) values($1,$2,$3)`,
+          "params": [requestData.mornLitre, requestData.eveningLitre, moment().toDate()]
+        }
+        await db.insertData(ins).then(response => {
+          if (response.status === 'success') {
+            res.send({ status: "success", message: "successfully inserted the data" })
+          }
+        })
+  
+      }
+    }else
+    {
     let today = moment().startOf('day').format('YYYY-MM-DD HH:mm:ss')
     // let today=moment().subtract(50,'minute').format('YYYY-MM-DD HH:mm:ss')
 
@@ -56,6 +99,7 @@ async function insertDailydata(req, res, next) {
     }
 
     console.log('inserted morndata')
+  }
   }
   catch (err) {
     console.log(err)
