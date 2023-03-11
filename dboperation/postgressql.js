@@ -70,12 +70,11 @@ let ins = {
   }
 
   let createTable={
-    "query":`CREATE SEQUENCE milkdata_id_seq;
-    CREATE TABLE milkdata
+    "query":`CREATE SEQUENCE expenses_id_seq;
+    CREATE TABLE expenses
     (
-       id INT NOT NULL DEFAULT NEXTVAL('milkdata_id_seq'),
-       morning_litre DECIMAL,
-       evening_litre DECIMAL,
+       id INT NOT NULL DEFAULT NEXTVAL('expenses_id_seq'),
+       amount INT,
        timestamp timestamp
     );`,
     "params":[]
@@ -89,7 +88,7 @@ let ins = {
     "query": `DELETE FROM milkdata where id=16 `,
     "params": []
   }
-//  insertData(del)
+//  insertData(createTable)
 
   // select query================
   let id=moment().subtract(29,'minute').format('YYYY-MM-DD HH:mm:ss')

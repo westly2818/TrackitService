@@ -6,7 +6,18 @@ async function insertDailydata(req, res, next) {
   try {
 
     let requestData = req.body
-    if(req.body.customInsert){
+    if(requestData.expenses){
+      let ins = {
+        "query": `INSERT INTO expenses (amount,timestamp) values($1,$2)`,
+        "params": [requestData.amount, moment().toDate()]
+      }
+      await db.insertData(ins).then(response => {
+        if (response.status === 'success') {
+          res.send({ status: "success", message: "successfully inserted the expense data" })
+        }
+      })
+    }
+   else if(req.body.customInsert){
       let getquery = {
         "query": `select * from milkdata where timestamp > '${requestData.startDate}' and timestamp <  '${requestData.endDate}'`,
         "params": []
@@ -107,12 +118,23 @@ async function insertDailydata(req, res, next) {
 };
 async function getdata(req, res, next) {
   try {
-    let getdata = {
-      "query": `select * from milkdata where timestamp>= $1 and timestamp<= $2`,
-      "params": [moment(req.body.startDate).toDate(), moment(req.body.endDate).toDate()]
-    }
-    let data = await db.queryData(getdata)
-    res.send({ status: "success", data: data.data })
+if(req.body.expenses){
+  let getdata = {
+    "query": `select * from expenses where timestamp>= $1 and timestamp<= $2`,
+    "params": [moment(req.body.startDate).toDate(), moment(req.body.endDate).toDate()]
+  }
+  let data = await db.queryData(getdata)
+  res.send({ status: "success", data: data.data })
+}
+else{
+  let getdata = {
+    "query": `select * from milkdata where timestamp>= $1 and timestamp<= $2`,
+    "params": [moment(req.body.startDate).toDate(), moment(req.body.endDate).toDate()]
+  }
+  let data = await db.queryData(getdata)
+  res.send({ status: "success", data: data.data })
+}
+    
   }
   catch (err) {
     console.log(err)
@@ -144,6 +166,7 @@ async function deleteData(req,res){
     console.log(err);
   }
 }
+
 
 module.exports = {
   insertDailydata: insertDailydata,
