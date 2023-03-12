@@ -46,6 +46,19 @@ async function insertDailydata(req, res, next) {
             }
           })
         }
+
+        else{
+          let ins = {
+            "query": `UPDATE  milkdata SET morning_litre=$1,evening_litre=$2 where id=$3`,
+            "params": [requestData.mornLitre, requestData.eveningLitre, result.data[0].id]
+          }
+          await db.insertData(ins).then(response => {
+            if (response.status === 'success') {
+              res.send({ status: "success", message: "successfully inserted the data" })
+            }
+          })
+    
+        }
       }
       else{
         let ins = {
