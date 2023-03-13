@@ -142,7 +142,7 @@ if(req.body.expenses){
 else{
   let getdata = {
     "query": `select * from milkdata where timestamp>= $1 and timestamp<= $2`,
-    "params": [moment(req.body.startDate).toDate(), moment(req.body.endDate).toDate()]
+    "params": [moment(req.body.startDate,"YYYY-MM-DD HH:mm:ss").toDate(), moment(req.body.endDate,"YYYY-MM-DD HH:mm:ss").toDate()]
   }
   let data = await db.queryData(getdata)
   res.send({ status: "success", data: data.data })
