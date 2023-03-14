@@ -135,7 +135,7 @@ if(req.body.expenses){
   console.log('incoming get data request for expenses')
   let getdata = {
     "query": `select * from expenses where timestamp>= $1 and timestamp<= $2`,
-    "params": [moment(req.body.startDate).toDate(), moment(req.body.endDate).toDate()]
+    "params": [moment(req.body.startDate,"YYYY-MM-DD HH:mm:ss").toDate(),moment(req.body.endDate,"YYYY-MM-DD HH:mm:ss").toDate()]
   }
   let data = await db.queryData(getdata)
   console.log('data sent ')
