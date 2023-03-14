@@ -132,19 +132,23 @@ async function insertDailydata(req, res, next) {
 async function getdata(req, res, next) {
   try {
 if(req.body.expenses){
+  console.log('incoming get data request for expenses')
   let getdata = {
     "query": `select * from expenses where timestamp>= $1 and timestamp<= $2`,
     "params": [moment(req.body.startDate).toDate(), moment(req.body.endDate).toDate()]
   }
   let data = await db.queryData(getdata)
+  console.log('data sent ')
   res.send({ status: "success", data: data.data })
 }
 else{
+  console.log('incoming get data request')
   let getdata = {
     "query": `select * from milkdata where timestamp>= $1 and timestamp<= $2`,
     "params": [moment(req.body.startDate,"YYYY-MM-DD HH:mm:ss").toDate(), moment(req.body.endDate,"YYYY-MM-DD HH:mm:ss").toDate()]
   }
   let data = await db.queryData(getdata)
+  console.log('data sent ')
   res.send({ status: "success", data: data.data })
 }
     
