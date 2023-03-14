@@ -85,10 +85,10 @@ let ins = {
     "params": [15,6]
   }
   let del={
-    "query": `DELETE FROM milkdata where id=16 `,
+    "query": `DELETE FROM milkdata where id=23 `,
     "params": []
   }
-//  insertData(createTable)
+ insertData(del)
 
   // select query================
   let id=moment().subtract(29,'minute').format('YYYY-MM-DD HH:mm:ss')

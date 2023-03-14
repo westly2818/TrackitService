@@ -63,7 +63,7 @@ async function insertDailydata(req, res, next) {
       else{
         let ins = {
           "query": `INSERT INTO milkdata (morning_litre,evening_litre,timestamp) values($1,$2,$3)`,
-          "params": [requestData.mornLitre, requestData.eveningLitre, moment().toDate()]
+          "params": [requestData.mornLitre, requestData.eveningLitre, moment(req.body.startDate).toDate()]
         }
         await db.insertData(ins).then(response => {
           if (response.status === 'success') {
