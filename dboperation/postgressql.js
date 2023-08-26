@@ -10,11 +10,11 @@ var pg = require("pg");
 async function insertData(querydata){
     return new Promise(async(resolve, reject) => {
         var client = new pg.Client({
-            user: "westly",
-            password: "i7H9Hfr8VODmX5tzOVu71PfTlbFdTc7U",
-            database: "dailydata",
-            port: 5432,
-            host: "dpg-cg3q8sbhp8u5r9f3ljf0-a.oregon-postgres.render.com",
+            user: "",
+            password: "",
+            database: "",
+            port: ,
+            host: "",
             ssl: true
           });
         await client.connect();
@@ -35,14 +35,14 @@ async function insertData(querydata){
 }
 async function queryData(query){
 return new Promise(async(resolve, reject) => {
-    var client = new pg.Client({
-        user: "westly",
-        password: "i7H9Hfr8VODmX5tzOVu71PfTlbFdTc7U",
-        database: "dailydata",
-        port: 5432,
-        host: "dpg-cg3q8sbhp8u5r9f3ljf0-a.oregon-postgres.render.com",
-        ssl: true
-      });
+   var client = new pg.Client({
+            user: "",
+            password: "",
+            database: "",
+            port: ,
+            host: "",
+            ssl: true
+          });
     await client.connect();
     await client.query(`${query.query}`, query.params, function (err, result){ 
         if(err){
